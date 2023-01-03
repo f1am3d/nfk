@@ -168,10 +168,31 @@ uses Unit2, demounit, net_unit,
 
 // ----------------------------------------------------
 
-function GetRedPlayers : byte; var i : byte; begin result := 0; for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 1 then inc(result);  end;
-function GetBluePlayers : byte; var i : byte; begin result := 0; for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 0 then inc(result); end;
-function GetRedTeamScore : Smallint; var i : byte; begin result := 0; if MATCH_STARTSIN > 0 then exit; for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 1 then result := result + players[i].frags;  end;
-function GetBlueTeamScore : Smallint; var i : byte; begin result := 0; if MATCH_STARTSIN > 0 then exit; for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 0 then result := result + players[i].frags; end;
+function GetRedPlayers : byte;
+var i : byte;
+begin result := 0;
+    for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 1 then inc(result);
+end;
+
+function GetBluePlayers : byte; var i : byte;
+begin result := 0;
+    for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 0 then inc(result);
+end;
+
+function GetRedTeamScore : Smallint;
+var i : byte;
+begin result := 0;
+    if MATCH_STARTSIN > 0 then exit;
+    for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 1 then result := result + players[i].frags;
+end;
+
+function GetBlueTeamScore : Smallint;
+var i : byte;
+begin result := 0;
+    if MATCH_STARTSIN > 0 then exit;
+    for i := 0 to SYS_MAXPLAYERS-1 do if players[i] <> nil then if players[i].team = 0 then result := result + players[i].frags;
+end;
+
 
 
 

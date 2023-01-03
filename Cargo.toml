@@ -6,3 +6,6 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+cpal = "0.14.2"
+gl = "0.14.0"
+sdl2 = "0.35.2"

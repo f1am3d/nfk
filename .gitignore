@@ -95,3 +95,4 @@ modules/
 # Added by cargo
 
 /target
+/.vs/
