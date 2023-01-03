@@ -1,4 +1,5 @@
 unit ZInterface;
+
 interface
 {------------------------------------------------------------------------
                        ZLib Interfaces for BNet.Pas
