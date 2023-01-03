@@ -15,7 +15,8 @@ unit bot_defs;
 interface
 // -= Constants =-
 
-const   BKEY_MOVERIGHT = 1; // bot movement
+const
+        BKEY_MOVERIGHT = 1; // bot movement
         BKEY_MOVELEFT = 2;
         BKEY_MOVEUP = 8;
         BKEY_MOVEDOWN = 16;
@@ -127,6 +128,15 @@ type TPlayer = class // Player Class. You can modify this.
         DXID : word;    // unique player ID.
         x, y, cx, cy, fangle : real;
         InertiaX, InertiaY : real;      // for velocity.
+
+        taunttime: byte; // задержка для издевки
+        machinegun_state, machinegun_speed: byte; // conn: animated machinegun
+        SND_Taunt: word; // conn: taunt
+
+        // conn: speedjump
+        speedjump: shortint; // jump counter & speed modifier
+        injump: byte; // jump timeout not to trigger x2 in a single jump
+        speed: real; // just to keep it simple
         end;
 
 // ==========================================
@@ -135,3 +145,4 @@ implementation
 uses bot_register, bot_console;
 
 end.
+

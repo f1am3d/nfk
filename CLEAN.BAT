@@ -9,8 +9,9 @@ del /s *.dcu
 del /s *.dsk
 del /s *.dsm
 del /s *.rsm
-del /s *.cfg
-del /s *.rar
+REM del /s *.cfg
+REM del /s *.rar
 del /s *.ddp
+del /s BASENFK\debug_*.log
 cls
 Exit

@@ -14,9 +14,12 @@ uses
   StdCtrls, FMOD;
 
 type
-  Tloadi = class(TForm)
+  Tloader = class(TForm)
     cns: TMemo;
     Button1: TButton;
+    Edit1: TEdit;
+    Button2: TButton;
+    Button3: TButton;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button1MouseDown(Sender: TObject; Button: TMouseButton;
@@ -28,7 +31,7 @@ type
   end;
 
 var
-  loadi: Tloadi;
+  loader: Tloader;
 
 implementation
 
@@ -36,20 +39,20 @@ uses Unit1;
 
 {$R *.DFM}
 
-procedure Tloadi.FormCreate(Sender: TObject);
+procedure Tloader.FormCreate(Sender: TObject);
 begin
-cns.Ctl3D := false;
+	cns.Ctl3D := false;
 end;
 
-procedure Tloadi.Button1Click(Sender: TObject);
+procedure Tloader.Button1Click(Sender: TObject);
 begin
-application.terminate;
+	application.terminate;
 end;
 
-procedure Tloadi.Button1MouseDown(Sender: TObject; Button: TMouseButton;
+procedure Tloader.Button1MouseDown(Sender: TObject; Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
-application.terminate;
+	application.terminate;
 end;
 
 end.

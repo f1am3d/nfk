@@ -1,8 +1,15 @@
 {
         game NEED FOR KILL
         variable module
-        (c) 3d[Power]
+        Continue from 062B as R2 by [KoD]connect
+        Originally created by 3d[Power]
+        
+        http://www.3dpower.org
         http://powersite.narod.ru
+
+        kod.connect@gmail.com
+		haz-3dpower@mail.ru
+        3dpower@3dpower.org
 }
 
 unit demounit;
@@ -422,6 +429,7 @@ type  TMP_RegisterPlayer = packed record  // client try to connect and join game
              DATA : BYTE;
              SIGNNATURE : word;
              DXID, ClientId : Word;       // clientid. for returning packed. to catch control.
+             PSID : string[16];
              netname : string[30];
              nfkmodel : string[30];
 end;
@@ -548,11 +556,21 @@ type  TMP_ClientShot = packed record
         x,y,fangle : single;
 end;
 
+// conn:
+// Taunt net packet
+// [?] Когда будут созданы модели с соответствующей анимацией, понадобится и этот пакет
+type  TMP_ClientTaunt = packed record
+        DATA: BYTE;
+        DXID : word;
+        x,y : single;
+end;
+
 type  TMP_cl_RocketSpawn = packed record
         DATA: BYTE;
         index : byte;
         spawnerDXID, selfDXID : word;
         fangle : smallint;
+        //clippixel: smallint;
         x,y: single;
 end;
 
@@ -934,174 +952,7 @@ type TPlayerPosUpdate_Packed = packed record
 
 
 
-const
-MMP_REGISTERPLAYER      = 1;
-MMP_CREATEPLAYER        = 2;
-MMP_PLAYERPOSUPDATE     = 3;
-MMP_CHATMESSAGE         = 4;
-MMP_ITEMAPPEAR          = 5;
-MMP_ITEMDISAPPEAR       = 6;
-MMP_HAUPDATE            = 7;
-MMP_DAMAGEPLAYER        = 8;
-MMP_IAMRESPAWN          = 9;
-MMP_SHOTPARTILE         = 10;
-MMP_CLIENTSHOT          = 11;
-MMP_RAILTRAIL           = 12;
-MMP_CLIENTRAILSHOT      = 13;
-MMP_SHAFTSTREEM         = 14;
-MMP_CL_ROCKETSPAWN      = 15;
-MMP_CL_GRENADESPAWN     = 16;
-MMP_CL_PLAZMASPAWN      = 17;
-//MMP_CL_BFGSPAWN         = 18;
-MMP_CL_OBJDESTROY       = 19;
-MMP_SV_SEND_TIME        = 20;
-MMP_SV_COMMAND          = 21;
-MMP_TIMEUPDATE          = 22;
-MMP_MATCHSTART          = 23;
-MMP_DISCONNECT          = 24;
-MMP_MAPRESTART          = 25;
-MMP_PING                = 26;
-MMP_ANSWERPING          = 27;
-MMP_THROWPLAYER         = 28;
-MMP_PLAYERRESPAWN       = 29;
-MMP_GAUNTLETSTATE       = 30;
-MMP_GAUNTLETFIRE        = 31;
-MMP_OBJCHANGESTATE      = 32;
-MMP_GAMESTATEREQUEST    = 33;
-MMP_GAMESTATEANSWER     = 34;
-MMP_HOSTSHUTDOWN        = 35;
-MMP_DROPPLAYER          = 36;
-MMP_SPECTATORCONNECT    = 37;
-MMP_SPECTATORDISCONNECT = 38;
-MMP_CHANGELEVEL         = 39;
-MMP_KICKPLAYER          = 40;
-MMP_EARNREWARD          = 41;
-MMP_WARMUPIS2           = 42;
-MMP_STATS               = 43;
-MMP_TELEPORTPLAYER      = 44;
-MMP_NAMECHANGE          = 45;
-MMP_MODELCHANGE         = 46;
-MMP_SENDSOUND           = 47;
-MMP_SENDSTATESOUND      = 48;
-MMP_XYSOUND             = 49;
-MMP_TEAMSELECT          = 50;
-MMP_CTF_EVENT_FLAGTAKEN         =51;
-MMP_CTF_EVENT_FLAGCAPTURE       =52;
-MMP_CTF_EVENT_FLAGDROP          =53;
-MMP_CTF_EVENT_FLAGPICKUP        =54;
-MMP_CTF_EVENT_FLAGDROP_APPLY    =55;
-MMP_CTF_EVENT_FLAGRETURN        =56;
-MMP_CTF_GAMESTATE               =57;
-MMP_CTF_EVENT_FLAGDROPGAMESTATE =58;
-MMP_CTF_GAMESTATESCORE          =59;
-MMP_CTF_FLAGCARRIER             =60;
-MMP_DOM_CAPTURE                 =61;
-MMP_DOM_SCORECHANGED            =62;
-MMP_WPN_EVENT_WEAPONDROP        =63;
-MMP_WPN_EVENT_PICKUP            =64;
-MMP_WPN_EVENT_WEAPONDROP_APPLY  =65;
-MMP_WPN_EVENT_WEAPONDROPGAMESTATE =66;
-MMP_CHATTEAMMESSAGE             =67;
-MMP_DOM_CAPTUREGAMESTATE        =68;
-MMP_CHANGEGAMETYPE              =69;
-MMP_MULTITRIX_WIN               =70;
-MMP_LOBBY_GAMESTATE             =71;
-MMP_LOBBY_PING                  =72;
-MMP_LOBBY_ANSWERPING            =73;
-MMP_PLAYERPOSUPDATE_COPY        =74;
-MMP_IAMQUIT                     =75;
-MMP_049test4_SHAFT_BEGIN        =76;
-MMP_049test4_SHAFT_END          =77;
-MMP_INVITE                      =78;
-MMP_VOTE                        =79;
-MMP_STARTVOTE                   =80;
-MMP_VOTERESULT                  =81;
-MMP_SV_COMMANDEX                =82;
-MMP_YOUAREREALYKILLED           =83;
-MMP_FLOOD                       =84;
-MMP_LOBBY_GAMESTATE_RESULT      =85;
-MMP_KILL_CLIENT                 =86;
-MMP_SV_COMMAND_CHANGED          =87;
-MMP_PLAYERPOSUPDATE_PACKED      =88;
-MMP_POWERUP_EVENT_PICKUP        =89;
-MMP_POWERUP_EVENT_POWERUPDROP   =90;
-MMP_POWERUP_EVENT_POWERUPGAMESTATE=91;
-MMP_RCON_MESSAGE                =92;
-MMP_RCON_ANSWER                 =93;
 
-const // sounds for FMOD
-SND_1_MIN = 1;
-SND_5_MIN = 2;
-SND_ammopkup = 3;
-SND_armor = 4;
-SND_bfg_fire = 5;
-SND_Bounce = 6;
-SND_Button = 7;
-SND_Damage2 = 8;
-SND_Damage3 = 9;
-SND_Dr1_end = 10;
-SND_Dr1_strt = 11;
-SND_error = 12;
-SND_excellent = 13;
-SND_expl = 14;
-SND_fight = 15;
-SND_flight = 16;
-SND_gameend = 17;
-SND_gauntl_r1 = 18;
-SND_gauntl_r2 = 19;
-SND_Gib1 = 20;
-SND_Gib2 = 21;
-SND_Grenade = 22;
-SND_haste = 23;
-SND_health100 = 24;
-SND_health25 = 25;
-SND_health5 = 26;
-SND_health50 = 27;
-SND_hit = 28;
-SND_holdable = 29;
-SND_humiliation = 30;
-SND_impressive = 31;
-SND_invisibility = 32;
-SND_jumppad = 33;
-SND_lava = 34;
-SND_lg_hum = 35;
-SND_lg_start = 36;
-SND_machine = 37;
-SND_menu2 = 38;
-SND_menu3 = 39;
-SND_noammo = 40;
-SND_one = 41;
-SND_plasma = 42;
-SND_poweruprespawn = 43;
-SND_prepare = 44;
-SND_protect3 = 45;
-SND_quaddamage = 46;
-SND_rail = 47;
-SND_regen = 48;
-SND_regeneration = 49;
-SND_respawn = 50;
-SND_rocket = 51;
-SND_shard = 52;
-SND_shotgun = 53;
-SND_sudden_death = 54;
-SND_talk = 55;
-SND_three = 56;
-SND_two = 57;
-SND_wearoff = 58;
-SND_wpkup = 59;
-SND_gauntl_a = 60;
-SND_takenlead = 61;
-SND_lostlead = 62;
-SND_tiedlead = 63;
-SND_redleads = 64;
-SND_blueleads = 65;
-SND_teamstied = 66;
-SND_flagcap = 67;
-SND_flagret = 68;
-SND_flagtk = 69;
-SND_domtake = 70;
-SND_domtake2 = 71;
-SND_vote=72;
 
 var DMissile : TDMissile;
     DMissileV2 : TDMissileV2;

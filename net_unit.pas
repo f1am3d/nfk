@@ -31,7 +31,7 @@ procedure Network_SendAllQueue;
 procedure Network_ParsePackets(IP : shortstring; Port : word);
 // =============================================================================
 implementation
-uses unit1;
+uses unit1, r2tools;
 
 // =============================================================================
 // Send All Queued Tasks. Called once per Frame.
@@ -137,6 +137,7 @@ begin
 
         move(Data, q^.data_, Size);
 //        AddMessage('!!!!! AddedToQueue !!!!!! + '+inttostr(q^.data_[0])+'. size: '+inttostr(Size));
+        r2_debuglog('!!!!! AddedToQueue !!!!!! + '+inttostr(q^.data_[0])+'. size: '+inttostr(Size));
 
         q^.timedout := GAMETIME + 5000; // deleted after this period.
         QueueBuf.Add(q);
@@ -160,24 +161,24 @@ begin
 //        __dat := Data;
         sss := '';
 
-        count := byte(Data^);
-        inc(integer(data), 2);
-        totalsize := 2;
-        inc(__dat,2);
+        count := byte(Data^);   // conn: first byte is packet series size
+        inc(integer(data), 2);  // conn: move pointer.. integer?
+        totalsize := 2;         // conn: so totalsize is at least 2
+        inc(__dat,2);           // conn: __dat?
 
         for i := 0 to count-1 do begin
-                PacketSize := byte(Data^);
+                PacketSize := byte(Data^); // conn: again?
 
                 if PacketSize = 0 then begin
-                        ErrorSound;
+                        SND.ErrorSound;
                         AddMessage('^1NETUNIT ERROR: ZERO SIZED DATA!');
                 end;
 
-                inc(totalsize, PacketSize);
-                inc(integer(data));
+                inc(totalsize, PacketSize); // conn: size counter++
+                inc(integer(data));         // conn: move pointer by ?
 //                __dat := Data;
-                mainform.BNET_NFK_ReceiveData(Data, IP, Port, PacketSize);
-                inc(integer(data), PacketSize);
+                mainform.BNET_NFK_ReceiveData(Data, IP, Port, PacketSize); // conn: grab packet content
+                inc(integer(data), PacketSize); // conn: move pointer by PacketSize
 
 
 {                // debug HEX print.

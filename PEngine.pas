@@ -62,7 +62,7 @@ begin
  if cycle > maxlife div 2 then ALPHA := trunc($FF-($FF/(maxlife/2))*(cycle - maxlife / 2)) else ALPHA := $F0;
 
  if SYS_BLOODRAIN=false then
- if bbb[trunc(xpos) div 32,trunc(ypos+3) div 16].block=true then begin
+ if AllBricks[trunc(xpos) div 32,trunc(ypos+3) div 16].block=true then begin
         ypos := round(ypos / 16)*16;
         xvel := 0;
         if random(2)=1 then cycle := cycle-1;
@@ -84,8 +84,8 @@ begin
         pattern := 0;
 
         if YPOS>4 then
-        if (bbb[trunc(xpos) div 32,trunc(ypos) div 16].block =true)
-        and (bbb[trunc(xpos) div 32,trunc(ypos-4) div 16].block =false) then pattern:=1;
+        if (AllBricks[trunc(xpos) div 32,trunc(ypos) div 16].block =true)
+        and (AllBricks[trunc(xpos) div 32,trunc(ypos-4) div 16].block =false) then pattern:=1;
 
 //      MainForm.PowerGraph.RotateEffect(mainform.Images[36], Round(Xpos)+GX, GY+Round(Ypos), angl+cycle*3,alpha*2,$FFFFFFFF,pattern, effectSrcAlpha OR EffectDiffuseAlpha);
 
