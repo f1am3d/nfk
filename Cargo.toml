@@ -8,4 +8,5 @@ edition = "2021"
 [dependencies]
 cpal = "0.14.2"
 gl = "0.14.0"
+glium = "0.32.1"
 sdl2 = "0.35.2"
