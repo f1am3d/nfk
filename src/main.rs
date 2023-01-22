@@ -1,28 +1,25 @@
 extern crate sdl2;
 extern crate gl;
 
-mod constants;
-mod renderer;
+mod game;
+
+use game::{
+    Engine,
+};
+use crate::game::EngineConstructParams;
+use crate::game::renderer::RendererLayer;
+
 
 fn main() {
-    let renderer::RendererInitResult {
-        event_pump: mut pump,
-        window_canvas: mut canvas
-    } = renderer::init();
+    let mut renderer_layer = RendererLayer::construct();
+    renderer_layer.start();
 
-    loop {
-        let status = renderer::check_events(&mut pump);
+    let engine_params = EngineConstructParams {};
+    let engine = Engine::construct(&engine_params);
 
-        if status {
-            renderer::render_frame(&mut canvas);
-        }
-        else {
-            break;
-        }
-    }
+    // let hud = GameHud::new();
 
-    renderer::thread_delay();
+    // hud.getRenderingLayer();
+   
 
-    // renderer::create_context();
-    // renderer::init_renderer();
 }
